@@ -49,7 +49,7 @@ class ArucoDetector:
         # make a map of ids to corners
         for i, marker_idx in enumerate(self.ids):
             mid = marker_idx[0]
-            if mid not in [0, 1, 2, 3, 4, 5]:
+            if mid not in [0, 1, 2, 3, 4, 5, 100, 101, 102, 103, 104, 105]:
                 continue
             corners = np.reshape(self.corners[i], (4, 2))
             self.aruco_info[mid] = {"corners": corners}

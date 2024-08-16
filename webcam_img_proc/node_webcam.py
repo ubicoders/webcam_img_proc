@@ -39,8 +39,8 @@ class WebcamDisplayNode(Node):
         self.pub_aruco.publish(pack_aruco("elp210", self.aruco_det.aruco_info))
 
         # # Display the image
-        # cv2.imshow("Webcam Feed", img_rect)
-        # cv2.waitKey(1) 
+        cv2.imshow("Webcam Feed", img_rect)
+        cv2.waitKey(1) 
 
     def destroy_node(self):
         cv2.destroyAllWindows()
