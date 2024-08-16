@@ -17,7 +17,7 @@ class WebcamDisplayNode(Node):
        
         # Initialize webcam (default is camera index 0)
         self.cam = ELP210Wrapper(4)
-        self.aruco_det = ArucoDetector(pose_on=True)
+        self.aruco_det = ArucoDetector(pose_on=True, expected_mids=[i for i in range(100, 106)])
         self.aruco_det.camera_matrix = self.cam.K
         self.aruco_det.dist_coeffs = self.cam.dist
 
@@ -33,14 +33,16 @@ class WebcamDisplayNode(Node):
 
         # Detect ArUco markers in the image
         self.aruco_det.detect_bgr(img_rect)
-        img_rect = self.aruco_det.drawMarkers(img_rect)
+        
 
         # Publish the ArUco markers
         self.pub_aruco.publish(pack_aruco("elp210", self.aruco_det.aruco_info))
 
         # # Display the image
-        cv2.imshow("Webcam Feed", img_rect)
-        cv2.waitKey(1) 
+        # img_rect = self.aruco_det.drawMarkers(img_rect)
+        # img_rect = self.aruco_det.draw_pose(img_rect)
+        # cv2.imshow("Webcam Feed", img_rect)
+        # cv2.waitKey(1) 
 
     def destroy_node(self):
         cv2.destroyAllWindows()

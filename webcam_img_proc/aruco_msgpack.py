@@ -28,8 +28,6 @@ def pack_aruco_markers(list_aruco_info):
     keys = list_aruco_info.keys()
     aruco_markers = []
     for key in keys:
-        if key not in [0, 1, 2, 3, 4, 5]:
-            continue
         marker = pack_each_aruco(key, list_aruco_info[key])
         aruco_markers.append(marker)
     return aruco_markers
@@ -66,6 +64,14 @@ def pack_each_aruco(mid, marker_info):
         vec3.y = nd_tvec[1]
         vec3.z = nd_tvec[2]
         marker.tvec = vec3
+
+    # tvect_aae
+    if (nd_tvec is not None):
+        vec3 = Vector3()
+        vec3.x = nd_tvec[2]
+        vec3.y = nd_tvec[0]
+        vec3.z = nd_tvec[1]
+        marker.tvec_aae = vec3
     
     # eul
     if (nd_eul is not None):
@@ -74,6 +80,14 @@ def pack_each_aruco(mid, marker_info):
         vec3.y = nd_eul[1]
         vec3.z = nd_eul[2]
         marker.eul = vec3
+
+    # eul_aae
+    if (nd_eul is not None):
+        vec3 = Vector3()
+        vec3.x = nd_eul[2]
+        vec3.y = nd_eul[0]
+        vec3.z = nd_eul[1]
+        marker.eul_aae = vec3
 
     # center
     if (nd_center is not None):

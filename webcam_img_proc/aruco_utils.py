@@ -22,7 +22,7 @@ def rotation_matrix_to_euler_angles(R):
 
  
 class ArucoDetector:
-    def __init__(self, pose_on=False ) -> None:
+    def __init__(self, pose_on=False , expected_mids =  [0, 1, 2, 3, 4, 5]) -> None:
         base_path = os.path.dirname(os.path.abspath(__file__))
         aruco_dict = aruco.getPredefinedDictionary(aruco.DICT_4X4_1000)
         arucoParameters = aruco.DetectorParameters()
@@ -35,6 +35,7 @@ class ArucoDetector:
         self.aruco_info = {}
         self.camera_matrix = np.zeros((3, 3))
         self.dist_coeffs = np.zeros((5, 1))
+        self.expected_mids = expected_mids  
 
     def detect_bgr(self, bgr_img):
         gray_img = cv2.cvtColor(bgr_img, cv2.COLOR_BGR2GRAY)
@@ -49,7 +50,7 @@ class ArucoDetector:
         # make a map of ids to corners
         for i, marker_idx in enumerate(self.ids):
             mid = marker_idx[0]
-            if mid not in [0, 1, 2, 3, 4, 5, 100, 101, 102, 103, 104, 105]:
+            if mid not in self.expected_mids:   
                 continue
             corners = np.reshape(self.corners[i], (4, 2))
             self.aruco_info[mid] = {"corners": corners}
@@ -86,6 +87,11 @@ class ArucoDetector:
         if (self.corners is None) or (self.ids is None):
             return img
         img = aruco.drawDetectedMarkers(img, self.corners)
+        return img
+    
+    def draw_pose(self, img):
+        for i in range(len(self.ids)):
+            cv2.drawFrameAxes(img, self.camera_matrix, self.dist_coeffs, self.rvecs[i], self.tvecs[i], 0.1)
         return img
     
     def update_idXYZ(self, mid, xyz):
