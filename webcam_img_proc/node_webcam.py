@@ -16,7 +16,7 @@ class WebcamDisplayNode(Node):
         self.pub_aruco = self.create_publisher(ImageMarkers, '/cam/aruco', 10)
        
         # Initialize webcam (default is camera index 0)
-        self.cam = ELP210Wrapper(4)
+        self.cam = ELP210Wrapper(2)
         self.aruco_det = ArucoDetector(pose_on=True, expected_mids=[i for i in range(100, 106)])
         self.aruco_det.camera_matrix = self.cam.K
         self.aruco_det.dist_coeffs = self.cam.dist
@@ -25,7 +25,7 @@ class WebcamDisplayNode(Node):
         self.timer = self.create_timer(0.001, self.timer_callback)
 
     def timer_callback(self):
-        self.tictok.update_and_pprint()
+        #self.tictok.update_and_pprint()
         self.cam.update()
 
         img_rect = self.cam.get_rect_img()

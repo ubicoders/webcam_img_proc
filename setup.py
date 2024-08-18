@@ -2,6 +2,7 @@ from setuptools import find_packages, setup
 from glob import glob
 import os
 
+
 package_name = 'webcam_img_proc'
 
 setup(
