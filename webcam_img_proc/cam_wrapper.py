@@ -20,7 +20,7 @@ class ELP210Wrapper():
         self.cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
-        self.cap.set(cv2.CAP_PROP_FPS, 500)
+        self.cap.set(cv2.CAP_PROP_FPS, 150)
         image_shape = (1280, 720)  # Assuming width x height
         self.K, self.roi = cv2.getOptimalNewCameraMatrix(K, dist, image_shape, 1, image_shape)
         self.dist = np.zeros_like(dist)

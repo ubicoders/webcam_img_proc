@@ -90,6 +90,8 @@ class ArucoDetector:
         return img
     
     def draw_pose(self, img):
+        if (self.ids is None):
+            return img
         for i in range(len(self.ids)):
             cv2.drawFrameAxes(img, self.camera_matrix, self.dist_coeffs, self.rvecs[i], self.tvecs[i], 0.1)
         return img
